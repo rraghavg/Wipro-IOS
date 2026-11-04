@@ -4,7 +4,7 @@ import Foundation
 let name = "Raghav"
 let rollNumber = 101
 
-// Marks in five subjects
+// Marks 
 var mark1 = 85
 var mark2 = 75
 var mark3 = 90
@@ -51,7 +51,7 @@ if attendance < 0 || attendance > 100 {
     print("Invalid Attendance")
 } else {
 
-    // Display Result
+    // result
     print("----- STUDENT RESULT -----")
     print("Name: \(name)")
     print("Roll Number: \(rollNumber)")
