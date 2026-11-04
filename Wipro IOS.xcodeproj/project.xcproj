@@ -11,20 +11,22 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "MyTool", "target-membership": [ "MyTool" ] },
+    { "kind": "folder", "path": "LAB1", "target-membership": [ "LAB1" ] },
+    { "kind": "folder", "path": "LAB2", "target-membership": [ "LAB2" ] },
     {
       "kind": "group",
       "name": "Products",
       "children": [
-        { "path": "<PRODUCTS>/MyTool", "id": "000000000000000000000120", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/LAB1", "id": "000000000000000000000120", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/LAB2", "id": "EC60777A309B8E7200316274", "type": "compiled.mach-o.executable", "index": false },
       ],
     },
   ],
   "targets": [
     {
-      "name": "MyTool",
+      "name": "LAB1",
       "id": "000000000000000100000000",
-      "product": "Products/MyTool",
+      "product": "Products/LAB1",
       "product-type": "tool",
       "build-phases": [
         "compile-sources",
@@ -36,6 +38,29 @@
         "PRODUCT_NAME": "$(TARGET_NAME)",
         "SDKROOT": "auto",
         "SUPPORTED_PLATFORMS": "$(AVAILABLE_PLATFORMS)",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    }, {
+      "name": "LAB2",
+      "id": "EC607779309B8E7200316274",
+      "product": "Products/LAB2",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
         "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
         "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
         "SWIFT_VERSION": "5.0",
@@ -113,5 +138,5 @@
     "XROS_DEPLOYMENT_TARGET": "27.2",
   },
   "last-upgrade": "27.0",
-  "last-swift-update": "27.0",
+  "last-swift-update": "27.2",
 }
