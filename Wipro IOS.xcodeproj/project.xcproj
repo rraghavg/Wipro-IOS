@@ -14,6 +14,7 @@
     { "kind": "folder", "path": "lab-1a", "target-membership": [ "LAB1" ] },
     { "kind": "folder", "path": "lab-1b", "target-membership": [ "LAB2" ] },
     { "kind": "folder", "path": "lab-1c", "target-membership": [ "lab-1c" ] },
+    { "kind": "folder", "path": "lab-1d", "target-membership": [ "lab-1d" ] },
     {
       "kind": "group",
       "name": "Products",
@@ -21,6 +22,7 @@
         { "path": "<PRODUCTS>/LAB1", "id": "000000000000000000000120", "type": "compiled.mach-o.executable", "index": false },
         { "path": "<PRODUCTS>/LAB2", "id": "EC60777A309B8E7200316274", "type": "compiled.mach-o.executable", "index": false },
         { "path": "<PRODUCTS>/lab-1c", "id": "EC179203309E09190030891C", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/lab-1d", "id": "EC17920D309E17DF0030891C", "type": "compiled.mach-o.executable", "index": false },
       ],
     },
   ],
@@ -71,6 +73,29 @@
       "name": "lab-1c",
       "id": "EC179202309E09190030891C",
       "product": "Products/lab-1c",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    }, {
+      "name": "lab-1d",
+      "id": "EC17920C309E17DF0030891C",
+      "product": "Products/lab-1d",
       "product-type": "tool",
       "build-phases": [
         "compile-sources",
