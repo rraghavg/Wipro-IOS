@@ -11,8 +11,8 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "LAB1A", "target-membership": [ "LAB1" ] },
-    { "kind": "folder", "path": "LAB1B", "target-membership": [ "LAB2" ] },
+    { "kind": "folder", "path": "lab-1a", "target-membership": [ "LAB1" ] },
+    { "kind": "folder", "path": "lab-1b", "target-membership": [ "LAB2" ] },
     {
       "kind": "group",
       "name": "Products",

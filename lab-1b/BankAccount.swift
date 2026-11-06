@@ -2,16 +2,16 @@ import Foundation
 
 class BankAccount {
 
-    // Private variable
+    // private variable
     private var balance: Double
 
     // Public read-only transaction history
     public private(set) var history: [String] = []
 
-    // Internal variable
+    // internal variable
     internal let bankName = "SBI Bank"
 
-    // Constructor
+    // constructor
     init(initialBalance: Double) {
 
         if initialBalance < 0 {
@@ -23,7 +23,7 @@ class BankAccount {
         }
     }
 
-    // Public deposit function
+    // pub depos func
     public func deposit(amount: Double) {
 
         if amount > 0 {
@@ -36,7 +36,7 @@ class BankAccount {
         }
     }
 
-    // Public withdraw function
+    // Pub withdraw func
     public func withdraw(amount: Double) {
 
         if amount <= 0 {
@@ -52,18 +52,18 @@ class BankAccount {
         }
     }
 
-    // Public function to show balance
+    // pub func to show balance
     public func showBalance() {
         print("Current Balance:", balance)
     }
 
-    // Fileprivate function
+    // fileprivate func
     fileprivate func showBank() {
         print("Bank Name:", bankName)
     }
 }
 
-// Accessing fileprivate function in same file
+// access fileprivate func in same file
 func showDetails(account: BankAccount) {
     account.showBank()
 }
