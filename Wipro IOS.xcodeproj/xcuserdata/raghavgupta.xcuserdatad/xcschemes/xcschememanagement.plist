@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>ENUM.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>LAB1.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -29,6 +34,11 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>lab-1e.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -38,6 +48,21 @@
 			<true/>
 		</dict>
 		<key>EC179202309E09190030891C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC17920C309E17DF0030891C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC179216309E1AE10030891C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC179220309F488A0030891C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

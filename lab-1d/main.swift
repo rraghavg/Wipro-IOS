@@ -119,6 +119,5 @@ let student1 = StudentProfile(
 
 student1.showProfile()
 
-print("\nProgram Completed")
 
 

@@ -144,4 +144,3 @@ case .failure(let error):
     print("Error:", error)
 }
 
-print("\nProgram Completed")
