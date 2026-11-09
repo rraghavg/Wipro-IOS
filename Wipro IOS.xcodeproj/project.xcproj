@@ -17,6 +17,7 @@
     { "kind": "folder", "path": "lab-1d", "target-membership": [ "lab-1d" ] },
     { "kind": "folder", "path": "lab-1e", "target-membership": [ "lab-1e" ] },
     { "kind": "folder", "path": "ENUM", "target-membership": [ "ENUM" ] },
+    { "kind": "folder", "path": "lab-2a", "target-membership": [ "lab-2a" ] },
     {
       "kind": "group",
       "name": "Products",
@@ -27,6 +28,7 @@
         { "path": "<PRODUCTS>/lab-1d", "id": "EC17920D309E17DF0030891C", "type": "compiled.mach-o.executable", "index": false },
         { "path": "<PRODUCTS>/lab-1e", "id": "EC179217309E1AE10030891C", "type": "compiled.mach-o.executable", "index": false },
         { "path": "<PRODUCTS>/ENUM", "id": "EC179221309F488A0030891C", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/lab-2a", "id": "EC76AE1730A2325F00187DA9", "type": "compiled.mach-o.executable", "index": false },
       ],
     },
   ],
@@ -146,6 +148,29 @@
       "name": "ENUM",
       "id": "EC179220309F488A0030891C",
       "product": "Products/ENUM",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    }, {
+      "name": "lab-2a",
+      "id": "EC76AE1630A2325F00187DA9",
+      "product": "Products/lab-2a",
       "product-type": "tool",
       "build-phases": [
         "compile-sources",
