@@ -66,6 +66,14 @@
             ReferencedContainer = "container:Wipro IOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EC21899E30A4A82E00B921F2"
+            BuildableName = "lab-3"
+            ReferencedContainer = "container:Wipro IOS.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
