@@ -6,21 +6,6 @@
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
       buildArchitectures = "Automatic">
-      <BuildActionEntries>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ECADDDD630A512A1002AC409"
-               BuildableName = "SwiftUI.app"
-               ReferencedContainer = "container:Wipro IOS.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-      </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
@@ -44,7 +29,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ECADDDD630A512A1002AC409"
+            BlueprintIdentifier = "ECADDE0130A51349002AC409"
             BuildableName = "SwiftUI.app"
             ReferencedContainer = "container:Wipro IOS.xcodeproj">
          </BuildableReference>
@@ -56,19 +41,10 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ECADDDD630A512A1002AC409"
-            BuildableName = "SwiftUI.app"
-            ReferencedContainer = "container:Wipro IOS.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ECADDDD630A512A1002AC409"
+            BlueprintIdentifier = "ECADDE0130A51349002AC409"
             BuildableName = "SwiftUI.app"
             ReferencedContainer = "container:Wipro IOS.xcodeproj">
          </BuildableReference>

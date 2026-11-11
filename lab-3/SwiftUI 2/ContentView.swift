@@ -5,37 +5,37 @@
 //  Created by Raghav Gupta on 12/11/26.
 //
 
-
-
 import SwiftUI
 
 struct ContentView: View {
 
-    @State var name = ""
-    @State var result = ""
+    @State private var name = ""
+    @State private var result = ""
 
     var body: some View {
 
-        VStack {
+        VStack(spacing: 20) {
 
             Text("My First App")
                 .font(.largeTitle)
+                .bold()
 
             TextField("Enter your name", text: $name)
                 .textFieldStyle(.roundedBorder)
                 .padding()
 
             Button("Submit") {
-
-                if name == "" {
+                if name.isEmpty {
                     result = "Please enter your name"
                 } else {
-                    result = "Hello " + name
+                    result = "Hello \(name)"
                 }
             }
+            .buttonStyle(.borderedProminent)
 
             Text(result)
-                .padding()
+                .font(.title3)
+
         }
         .padding()
     }
