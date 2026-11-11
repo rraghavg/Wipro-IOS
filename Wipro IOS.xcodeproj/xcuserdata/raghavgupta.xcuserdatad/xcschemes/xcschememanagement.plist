@@ -6,43 +6,80 @@
 	<dict>
 		<key>ENUM.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
 		<key>LAB1.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
 		<key>LAB2.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
 		<key>MyTool.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
 		<key>lab-1c.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
 		<key>lab-1d.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
 		<key>lab-1e.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
 		<key>lab-2a.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>lab-2b.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>7</integer>
+		</dict>
+		<key>lab-2c.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>lab-2d.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>10</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -72,7 +109,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>EC21898030A498F300B921F2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC21898A30A4990100B921F2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC21899430A4991400B921F2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC21899E30A4A82E00B921F2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>EC607779309B8E7200316274</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC76AE1630A2325F00187DA9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
