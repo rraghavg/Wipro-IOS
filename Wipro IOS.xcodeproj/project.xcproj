@@ -50,6 +50,37 @@
     { "kind": "folder", "path": "lab-2c", "target-membership": [ "lab-2c" ] },
     { "kind": "folder", "path": "lab-2d", "target-membership": [ "lab-2d" ] },
     {
+      "kind": "folder",
+      "path": "assessment-m1",
+      "membership-exceptions": [
+        {
+          "target": "task-1",
+          "inclusions": [
+            "task-1/main.swift",
+          ],
+        }, {
+          "target": "task-2",
+          "inclusions": [
+            "task-2/main.swift",
+          ],
+        }, {
+          "target": "task-3",
+          "inclusions": [
+            "task-3/main.swift",
+          ],
+        }, {
+          "target": "task-4",
+          "inclusions": [
+            "task-4/main.swift",
+          ],
+        }, {
+          "target": "task-5",
+          "inclusions": [
+            "task-5/main.swift",
+          ],
+        },
+      ],
+    }, {
       "kind": "group",
       "name": "Products",
       "children": [
@@ -63,6 +94,11 @@
         { "path": "<PRODUCTS>/lab-2d", "id": "EC21899530A4991400B921F2", "type": "compiled.mach-o.executable", "index": false },
         { "path": "<PRODUCTS>/UIKIT.app", "id": "ECADDDB030A51285002AC409", "type": "wrapper.application", "index": false },
         { "path": "<PRODUCTS>/SwiftUI.app", "id": "ECADDE0230A51349002AC409", "type": "wrapper.application", "index": false },
+        { "path": "<PRODUCTS>/task-1", "id": "EC00000130B0000000000001", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/task-2", "id": "EC00000230B0000000000002", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/task-3", "id": "EC00000330B0000000000003", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/task-4", "id": "EC00000430B0000000000004", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/task-5", "id": "EC00000530B0000000000005", "type": "compiled.mach-o.executable", "index": false },
       ],
     },
   ],
@@ -331,6 +367,121 @@
         "SWIFT_VERSION": "5.0",
         "TARGETED_DEVICE_FAMILY": "1,2",
         "VALIDATE_PRODUCT[config=Release]": "YES",
+      },
+    }, {
+      "name": "task-1",
+      "id": "EC00000A30B0000000000001",
+      "product": "Products/task-1",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    }, {
+      "name": "task-2",
+      "id": "EC00000A30B0000000000002",
+      "product": "Products/task-2",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    }, {
+      "name": "task-3",
+      "id": "EC00000A30B0000000000003",
+      "product": "Products/task-3",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    }, {
+      "name": "task-4",
+      "id": "EC00000A30B0000000000004",
+      "product": "Products/task-4",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    }, {
+      "name": "task-5",
+      "id": "EC00000A30B0000000000005",
+      "product": "Products/task-5",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
       },
     },
   ],
