@@ -1,7 +1,7 @@
 MVC vs MVVM (Quick Notes)
 
 ---
-MVC (The Old School Way)
+MVC (Old)
 Basically 3 pieces:
 - Model: Just the data, database, and API stuff.
 - View: What the user actually sees (buttons, labels, screens).
@@ -14,7 +14,7 @@ The problem:
 The Controller ends up doing way too much heavy lifting. Everything gets tightly tangled together, the controller file turns into a massive mess, and writing unit tests without running the UI is an absolute headache.
 
 ---
-MVVM (The Modern / Cleaner Way)
+MVVM (New)
 Upgraded separation of duties:
 - Model: Still just the data and network/db layer.
 - View: Dumb UI. It just displays whatever is there and listens for user taps. No business logic.
@@ -23,12 +23,11 @@ Upgraded separation of duties:
 How it flows:
 User taps a button -> View passes it to ViewModel -> ViewModel updates its data streams -> View is already observing those streams (data binding) and updates itself automatically.
 
----
-Quick Comparison / Cheat Sheet:
+Summary:
 - Who handles what: In MVC, the Controller micromanages everything. In MVVM, ViewModel just updates state, and View auto-reacts.
 - UI updates: MVC is manual (Controller forces View to update). MVVM uses data binding / observers (hands-off).
 - Testing: MVC is painful to test. MVVM is super easy because ViewModel has zero dependency on UI or platform APIs.
 - Maintenance: MVC code gets messy and tightly coupled fast. MVVM follows single responsibility, so tweaking UI won't break your business logic.
 
-Why pick MVVM?
-Less boilerplate, way cleaner code, automatic UI syncing, and you can actually unit test your app logic without crying.
+MVVM over MVC
+Less boilerplate, cleaner code, automatic UI syncing, and you can actually unit test your app logic without crying.
