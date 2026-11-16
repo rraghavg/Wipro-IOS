@@ -1,0 +1,23 @@
+Why UI Must Not Be Updated From a Background Queue
+=====================================================
+
+1. UIKit is Not Thread-Safe
+UIKit is deliberately designed without internal synchronization locks on its properties (like frame, text, backgroundColor, alpha). Adding locks around thousands of UI elements would create massive overhead, killing frame rates (dropping below 60/120 FPS) and risking complex deadlocks between views and layout passes.
+
+2. Core Animation & Graphics Pipeline
+Every UIView is backed by a CALayer. When you make changes to UI elements, Core Animation batches these updates inside an implicit CATransaction on the main thread. At the end of the Main RunLoop cycle, this transaction commits the render tree and passes it via IPC to Apple's Render Server (backboardd).
+If a background thread mutates a layer's properties while the main thread is packaging this data, the render server gets corrupted data. This causes visual tearing, missing views, or QuartzCore crashes.
+
+3. Main RunLoop & VSync Alignment
+The Main Thread runs a continuous loop (RunLoop) synchronized with screen hardware refresh intervals (60Hz / 120Hz VSync pulses via CADisplayLink). Touch handling, timers, layout passes (layoutSubviews), and drawing all happen in this orderly cycle.
+Background queues run without any awareness of VSync timing. Updating UI from a background queue causes race conditions during drawing cycles.
+
+4. Auto Layout Engine (NSISEngine)
+Auto Layout uses a Cassowary simplex solver engine (NSISEngine) to calculate view positions from constraints. This engine is single-threaded and lives on the main thread. Touching constraints or view hierarchies from a background thread corrupts the equation solver matrix, resulting in zero-sized views or instant crashes.
+
+5. Touch Event Delivery & Hit-Testing
+When the user touches the screen, the system uses hitTest:withEvent: on the main thread to traverse the subviews array. If a background thread modifies subviews at the exact same moment, the app throws an exception (e.g., "Collection was mutated while being enumerated") or attempts to interact with deallocated memory (EXC_BAD_ACCESS).
+
+Summary Rule:
+- Background Queues (DispatchQueue.global): Do heavy computations, JSON parsing, disk I/O, and network operations here.
+- Main Queue (DispatchQueue.main): Jump back here before updating any labels, buttons, indicators, or view properties.

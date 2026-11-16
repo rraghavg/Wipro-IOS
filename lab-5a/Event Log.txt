@@ -1,0 +1,16 @@
+
+LAB 5A: GCD, QUEUES, AND MAIN-THREAD UI — EVENT LOG
+
+
+[00:44:38.496] 🟢 [MAIN THREAD] [Queue: com.apple.main-thread] [UI] Button tapped: starting slow background task
+[00:44:38.624] 🔵 [BG THREAD]   [Queue: com.apple.root.user-initiated-qos] [BACKGROUND] Simulating heavy calculation on global queue...
+[00:44:42.694] 🔵 [BG THREAD]   [Queue: com.apple.root.user-initiated-qos] [BACKGROUND] Background computation done. Returning to main thread.
+[00:44:42.733] 🟢 [MAIN THREAD] [Queue: com.apple.main-thread] [MAIN] Updating UI on main thread safely.
+[00:44:48.336] 🟢 [MAIN THREAD] [Queue: com.apple.main-thread] [UI] Button tapped: scheduling asyncAfter response
+[00:44:50.969] 🟢 [MAIN THREAD] [Queue: com.apple.main-thread] [ASYNC-AFTER] Timer fired on main queue after 2.5s.
+[00:44:55.868] 🟢 [MAIN THREAD] [Queue: com.apple.main-thread] [UI] Button tapped: starting 2 concurrent operations
+[00:44:55.897] 🔵 [BG THREAD]   [Queue: com.apple.root.user-initiated-qos] [TASK-A] Task A (Fetch User Profile) started on background queue.
+[00:44:55.897] 🔵 [BG THREAD]   [Queue: com.apple.root.user-initiated-qos] [TASK-B] Task B (Fetch Notifications) started on background queue.
+[00:44:57.410] 🔵 [BG THREAD]   [Queue: com.apple.root.user-initiated-qos] [TASK-B] Task B completed.
+[00:44:57.907] 🔵 [BG THREAD]   [Queue: com.apple.root.user-initiated-qos] [TASK-A] Task A completed.
+[00:44:58.185] 🟢 [MAIN THREAD] [Queue: com.apple.main-thread] [MAIN] DispatchGroup notified main queue. Both tasks finished.
