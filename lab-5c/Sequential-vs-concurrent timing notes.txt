@@ -1,0 +1,63 @@
+Lab 5C: Sequential vs Concurrent Timing Notes
+Student: Raghav Gupta
+
+
+Sequential vs Concurrent Timing in Swift
+1. Sequential Execution
+
+Sequential execution means tasks are performed one after another. The next task starts only after the previous task finishes.
+
+Tasks execute in a fixed order.
+
+Simple to understand and manage.
+
+Takes more time when tasks can run independently.
+
+2. Concurrent Execution
+
+Concurrent execution means multiple tasks can make progress during overlapping periods of time. Tasks may run simultaneously on different threads.
+
+Multiple tasks can progress together.
+
+Improves application performance and responsiveness.
+
+Useful for network requests, file operations, and background tasks.
+Example in Swift:
+import Foundation
+
+func task1() async {
+    print("Task 1 started")
+    try? await Task.sleep(for: .seconds(2))
+    print("Task 1 completed")
+}
+
+func task2() async {
+    print("Task 2 started")
+    try? await Task.sleep(for: .seconds(2))
+    print("Task 2 completed")
+}
+
+// Sequential execution
+func sequential() async {
+    await task1()
+    await task2()
+}
+
+// Concurrent execution
+func concurrent() async {
+    async let first = task1()
+    async let second = task2()
+
+    await first
+    await second
+}
+
+
+Timing Comparison
+Execution    Task 1    Task 2    Total time
+Sequential    2 sec    2 sec    ~4 sec
+Concurrent    2 sec    2 sec    ~2 sec
+
+Approximate timing, excluding execution overhead.
+
+Conclusion: Sequential execution performs tasks one by one, whereas concurrent execution allows independent tasks to overlap, reducing total execution time and improving efficiency.

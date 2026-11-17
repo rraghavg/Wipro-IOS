@@ -49,8 +49,6 @@
     { "kind": "folder", "path": "lab-2b", "target-membership": [ "lab-2b" ] },
     { "kind": "folder", "path": "lab-2c", "target-membership": [ "lab-2c" ] },
     { "kind": "folder", "path": "lab-2d", "target-membership": [ "lab-2d" ] },
-    { "kind": "folder", "path": "lab-5c", "target-membership": [ "lab-5c" ] },
-    { "kind": "folder", "path": "lab-5d", "target-membership": [ "lab-5d" ] },
     {
       "kind": "folder",
       "path": "assessment-m1",
@@ -157,6 +155,18 @@
             "ViewController.swift",
           ],
         },
+      ],
+    }, {
+      "kind": "folder",
+      "path": "lab-5c",
+      "target-membership": [
+        "lab-5c",
+      ],
+    }, {
+      "kind": "folder",
+      "path": "lab-5d",
+      "target-membership": [
+        "lab-5d",
       ],
     }, {
       "kind": "group",

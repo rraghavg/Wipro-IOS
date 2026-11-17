@@ -1,0 +1,31 @@
+Lab 5C: Task Groups & Structured Concurrency 
+Testing with courses: ["CS101", "CS102", "CS103", "CS104"]
+
+1. Running Sequential Fetch...
+Fetched 4 courses:
+  - CS101: Introduction to Swift
+  - CS102: iOS UI Development
+  - CS103: Async/Await & Concurrency
+  - CS104: Data Persistence with CoreData
+Sequential time: 4.09 seconds
+
+2. Running Concurrent Fetch (TaskGroup)...
+Fetched 4 courses:
+  - CS103: Async/Await & Concurrency
+  - CS101: Introduction to Swift
+  - CS102: iOS UI Development
+  - CS104: Data Persistence with CoreData
+Concurrent time: 1.03 seconds
+
+3. Testing Child Task Failure (CS102 will fail)...
+  [Warning] Failed to fetch CS102: notFound("CS102")
+Successfully retrieved 3 courses despite failure:
+  - CS101: Introduction to Swift
+  - CS103: Async/Await & Concurrency
+  - CS104: Data Persistence with CoreData
+Notice: The failure of CS102 did not cancel the other courses.
+
+4. Extension: Fetching with Max Concurrency Limit (batch size = 2)...
+  Processing batch: ["CS101", "CS102"]
+  Processing batch: ["CS103", "CS104"]
+Batch fetch finished with 4 courses in 2.11s
