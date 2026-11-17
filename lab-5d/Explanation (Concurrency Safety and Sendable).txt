@@ -1,0 +1,35 @@
+Lab 5D: Concurrency Safety, Actors, and Sendable
+Student: Raghav Gupta
+
+Concurrency Safety, Actors, and Sendable in Swift
+1. Concurrency Safety
+
+Concurrency safety means managing multiple tasks running at the same time without causing errors or unexpected changes to shared data. Swift provides tools like async/await, actors, and locks to prevent data races and ensure safe execution.
+
+2. Actors
+
+Actors are reference types in Swift that protect shared mutable data. They allow only one task at a time to access their isolated data, preventing data races.
+
+Example:
+actor BankAccount {
+    var balance = 1000
+
+    func deposit(amount: Int) {
+        balance += amount
+    }
+}
+
+
+3. Sendable
+
+Sendable is a protocol in Swift that ensures a value can safely be shared between different concurrency contexts (tasks). Types such as structures containing safe value types can conform to Sendable.
+
+Example:
+struct Student: Sendable {
+    let name: String
+    let age: Int
+}
+
+
+Conclusion
+Concurrency safety helps prevent data races, actors protect shared mutable data, and Sendable ensures data can be safely transferred between concurrent tasks. Together, they make Swift applications more reliable and secure.
