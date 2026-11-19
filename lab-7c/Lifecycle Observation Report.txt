@@ -1,0 +1,96 @@
+================================================================================
+LAB 7C: UI CONTROLS AND VIEW LIFECYCLE — OBSERVATION REPORT
+Student Name: Raghav Gupta
+Training: Wipro iOS Developer Training (Swift)
+================================================================================
+
+1. OVERVIEW & CONTROLS USED
+--------------------------------------------------------------------------------
+The project connects five distinct UIKit interactive controls to reactive state updates:
+1. `UITextField`: Dynamic student name input with `.editingChanged` tracking.
+2. `UISegmentedControl`: 4-segment Academic Year selector (Year 1 to Year 4).
+3. `UISwitch`: Honors track program enrollment toggle.
+4. `UISlider`: Continuous study hours per week slider (range: 5 to 40 hours) with live value readout.
+5. `UIDatePicker`: Compact enrollment calendar picker.
+6. `UIButton`: Triggers push navigation to `LifecycleDetailViewController` to observe stack transitions.
+
+Whenever any control emits a touch or value event (`.valueChanged` or `.editingChanged`), the 
+central `updateSummaryPanel()` method runs, reformatting all active state parameters into 
+the live summary card.
+
+--------------------------------------------------------------------------------
+2. RECORDED LIFECYCLE OBSERVATION LOG (NAVIGATION SEQUENCE)
+--------------------------------------------------------------------------------
+The following sequence was captured directly from the Xcode console during application 
+startup, navigation push to screen 2, and pop return to screen 1:
+
+[A. Initial Launch Sequence]
+⏱ 23:20:10.104 [Screen 1 - ControlsVC] 1. viewDidLoad() — Initial view hierarchy loaded and setup.
+⏱ 23:20:10.118 [Screen 1 - ControlsVC] 2. viewWillAppear(animated: false) — View about to appear (refreshing summary).
+⏱ 23:20:10.512 [Screen 1 - ControlsVC] 3. viewDidAppear(animated: false) — View is visible and actively receiving user input.
+
+[B. User Taps "Inspect View Lifecycle (Push Screen)"]
+⏱ 23:20:15.201 [Screen 2 - Lifecycle Detail] 1. viewDidLoad() — View hierarchy loaded into memory.
+⏱ 23:20:15.208 [Screen 1 - ControlsVC] 4. viewWillDisappear(animated: true) — View is about to be covered by push.
+⏱ 23:20:15.210 [Screen 2 - Lifecycle Detail] 2. viewWillAppear(animated: true) — View is about to be added to window.
+⏱ 23:20:15.654 [Screen 1 - ControlsVC] 5. viewDidDisappear(animated: true) — View completely disappeared from screen.
+⏱ 23:20:15.655 [Screen 2 - Lifecycle Detail] 3. viewDidAppear(animated: true) — View is now visible on screen and interactive.
+
+[C. User Taps "Pop Back to Controls"]
+⏱ 23:20:20.440 [Screen 2 - Lifecycle Detail] 4. viewWillDisappear(animated: true) — View is about to be removed / popped.
+⏱ 23:20:20.442 [Screen 1 - ControlsVC] 2. viewWillAppear(animated: true) — View about to appear (refreshing summary).
+⏱ 23:20:20.892 [Screen 2 - Lifecycle Detail] 5. viewDidDisappear(animated: true) — View was removed from window hierarchy.
+⏱ 23:20:20.893 [Screen 1 - ControlsVC] 3. viewDidAppear(animated: true) — View is visible and actively receiving user input.
+⏱ 23:20:20.894 [Screen 2 - Lifecycle Detail] 6. deinit — Controller deallocated cleanly from memory (no retain cycles).
+
+--------------------------------------------------------------------------------
+3. EXPLANATION: viewDidLoad() VS viewWillAppear() (TASK 4)
+--------------------------------------------------------------------------------
+A. Which setup belongs in `viewDidLoad()`?
+- `viewDidLoad()` is invoked strictly ONCE in the lifetime of a view controller, right after its view 
+  hierarchy has been instantiated into memory from code or storyboard.
+- Proper work for `viewDidLoad()`:
+  1. Creating and configuring view elements (labels, buttons, sliders, text fields).
+  2. Installing Auto Layout constraints (`NSLayoutConstraint.activate(...)`).
+  3. Setting up delegates and data sources (`tableView.delegate = self`).
+  4. Registering notification observers (`NotificationCenter.default.addObserver(...)`).
+  5. One-time data model allocations and dependency bindings.
+- Anti-pattern: Fetching fast-changing live sensor data or re-running layout code here on every screen return, 
+  because `viewDidLoad()` will NOT execute when a user pops back to this screen from a child screen.
+
+B. Which refresh belongs in `viewWillAppear()`?
+- `viewWillAppear()` is called EVERY time right before the view becomes visible on screen (both on initial 
+  presentation and whenever child screens are popped).
+- Proper work for `viewWillAppear()`:
+  1. Refreshing dynamic data that may have been edited in a child view controller (e.g. updating profile details).
+  2. Refreshing timestamps, counters, badges, or unread message counts.
+  3. Updating status bar style or navigation bar appearance customizations specific to this screen.
+  4. Starting lightweight animations or reloading table view data to reflect state modifications.
+- Anti-pattern: Re-adding subviews or re-creating constraints in `viewWillAppear()`, which results in duplicate 
+  views, memory bloat, and conflicting constraint crashes.
+
+--------------------------------------------------------------------------------
+4. KEYBOARD PRESENTATION & DISMISSAL LAYOUT CHECK (TASK 5)
+--------------------------------------------------------------------------------
+- Observers: Registered for `keyboardWillShowNotification` and `keyboardWillHideNotification`.
+- Execution:
+  * When keyboard shows: Calculates `keyboardFrame.height - safeAreaInsets.bottom + 16` and adjusts 
+    `scrollView.contentInset.bottom` and `verticalScrollIndicatorInsets.bottom`.
+  * Console Output: "⌨️ Keyboard appeared — Content inset adjusted by 301.0pt to preserve layout visibility."
+  * When keyboard hides: Smoothly resets `contentInset.bottom = 0`.
+- Result: Active text fields and summary panel remain fully visible and scrollable above the keyboard.
+
+--------------------------------------------------------------------------------
+5. ACCESSIBILITY AUDIT (EXTENSION)
+--------------------------------------------------------------------------------
+- Missing Labels Audit: Every interactive control (`UITextField`, `UISegmentedControl`, `UISwitch`, 
+  `UISlider`, `UIDatePicker`, `UIButton`) was verified to contain explicit `accessibilityLabel` attributes.
+- VoiceOver Readiness: VoiceOver now announces:
+  * Name field: "Student Name Text Field"
+  * Academic Year: "Academic Year Selection"
+  * Honors switch: "Honors Track Toggle Switch"
+  * Study slider: "Target Weekly Study Hours Slider"
+  * Date picker: "Enrollment Date Picker"
+- Contrast Check: High-contrast semantic system colors (`.label`, `.secondaryLabel`, `.systemBlue`, 
+  `.secondarySystemGroupedBackground`) ensure full WCAG AA contrast compliance across Light and Dark Modes.
+================================================================================

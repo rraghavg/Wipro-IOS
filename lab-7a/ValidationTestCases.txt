@@ -1,0 +1,99 @@
+================================================================================
+LAB 7A: UIKIT PROFILE FORM — VALIDATION TEST CASES
+Student Name: Raghav Gupta
+Training: Wipro iOS Developer Training (Swift)
+================================================================================
+
+TEST SUITE OVERVIEW:
+This document records comprehensive validation test scenarios executed on the 
+UIKit Profile Form application across multiple simulator device sizes 
+(e.g., iPhone 17 / 16 Pro Max and compact iPhone SE 3rd gen).
+
+--------------------------------------------------------------------------------
+TEST CASE 1: Empty Form Submission
+- Input: 
+  * Name: "" (empty)
+  * Email: "" (empty)
+  * Course Track: Default selected ("iOS Swift")
+- Expected Behavior: 
+  * Submission is blocked.
+  * Inline red error appears under Name: "Name is required (at least 2 letters)."
+  * Inline red error appears under Email: "Please enter a valid email address (e.g., name@domain.com)."
+  * Red borders highlight the invalid fields.
+  * Card performs a subtle shake feedback animation.
+- Result: PASS
+
+--------------------------------------------------------------------------------
+TEST CASE 2: Single-Character Name Boundary Check
+- Input: 
+  * Name: "R" (1 character)
+  * Email: "raghav@wipro.com"
+- Expected Behavior: 
+  * Name inline error is displayed.
+  * Form submission is blocked until at least 2 characters are entered.
+- Result: PASS
+
+--------------------------------------------------------------------------------
+TEST CASE 3: Invalid Email Format
+- Input: 
+  * Name: "Raghav Gupta"
+  * Email: "raghavguptagmail.com" (missing '@' and domain dot)
+- Expected Behavior: 
+  * Email regex validation fails.
+  * Inline error displays under Email.
+  * Submit is prevented.
+- Result: PASS
+
+--------------------------------------------------------------------------------
+TEST CASE 4: Valid Submission with Default Course Track
+- Input: 
+  * Name: "Raghav Gupta"
+  * Email: "raghav.gupta@wipro.com"
+  * Course Track: Segmented Control index 0 ("iOS Swift")
+  * Custom Course: "" (empty)
+- Expected Behavior: 
+  * All inline errors disappear.
+  * Keyboard dismisses automatically.
+  * Success alert dialog pops up with title "Profile Submitted! 🎉"
+  * Message confirms:
+    • Name: Raghav Gupta
+    • Email: raghav.gupta@wipro.com
+    • Track: iOS Swift
+- Result: PASS
+
+--------------------------------------------------------------------------------
+TEST CASE 5: Valid Submission with Custom Track Specification
+- Input: 
+  * Name: "Aarav Sharma"
+  * Email: "aarav.sharma@example.com"
+  * Course Track: "Cloud DevOps"
+  * Custom Course: "Kubernetes & AWS Module"
+- Expected Behavior: 
+  * Validation passes cleanly.
+  * Success alert shows: "Track: Cloud DevOps (Kubernetes & AWS Module)".
+- Result: PASS
+
+--------------------------------------------------------------------------------
+TEST CASE 6: Form Reset Action
+- Input: 
+  * Fill fields with values and trigger validation errors.
+  * Tap "Clear Form" button.
+- Expected Behavior: 
+  * All text fields are emptied.
+  * All inline error labels are hidden (`isHidden = true`).
+  * Field border highlights are reset.
+  * Selected segment returns to default (index 0).
+  * Keyboard is dismissed.
+- Result: PASS
+
+--------------------------------------------------------------------------------
+TEST CASE 7: Responsive Auto Layout & Keyboard Avoidance (Compact vs Large Screen)
+- Devices Tested:
+  * iPhone 17 / 16 (Standard / Large)
+  * iPhone SE 3rd gen (Compact screen)
+- Expected Behavior:
+  * On compact screens, `UIScrollView` allows scrolling through all inputs without any visual clipping.
+  * `keyboardLayoutGuide.topAnchor` constraint ensures the submit button and active text fields are not obscured by the keyboard.
+  * Dynamic Type automatically scales labels with accessibility settings.
+- Result: PASS
+================================================================================

@@ -176,6 +176,27 @@
 			<key>orderHint</key>
 			<integer>27</integer>
 		</dict>
+		<key>lab-7a.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>28</integer>
+		</dict>
+		<key>lab-7b.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>29</integer>
+		</dict>
+		<key>lab-7c.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>30</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -270,6 +291,21 @@
 			<true/>
 		</dict>
 		<key>EC00001430B000000000000E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC00001630B000000000000F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC00001830B0000000000010</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC00001A30B0000000000011</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -1,0 +1,117 @@
+================================================================================
+LAB 7B: STORYBOARDS, VIEW HIERARCHY, AND NAVIGATION — TECHNICAL REPORT
+Student Name: Raghav Gupta
+Training: Wipro iOS Developer Training (Swift)
+================================================================================
+
+1. NAVIGATION FLOW ARCHITECTURE
+--------------------------------------------------------------------------------
+The application utilizes a hierarchical stack-based navigation architecture managed 
+by `UINavigationController`.
+
+  [ UIWindow (Root Container) ]
+              │
+              ▼
+  [ UINavigationController ] (Main Stack Coordinator)
+              │
+              ├── Root View Controller: [ CourseListViewController ]
+              │     │
+              │     ├── [ UITableView ]
+              │     │     └── [ CourseTableViewCell ] (Custom Reusable Cell)
+              │     └── [ EmptyStateView ] (Toggled when catalog is empty)
+              │
+              │  (User taps row ➔ pushViewController(detailVC, animated: true))
+              ▼
+  [ CourseDetailViewController ] (Pushed Child Screen)
+        │
+        ├── [ UIScrollView ] (Responsive vertically scrolling container)
+        │     └── [ UIStackView ] (Content card stack)
+        │           ├── Header Card (Icon, Title, Category, Description)
+        │           ├── Details Card (Instructor, Duration, Skill Level)
+        │           ├── Syllabus Curriculum Card (Module numbering badges)
+        │           └── Action Card (Enrollment & Pop Navigation buttons)
+        │
+        └── (User taps Back or popButton ➔ navigationController?.popViewController(animated: true))
+
+--------------------------------------------------------------------------------
+2. XCODE VIEW HIERARCHY & PARENT-CHILD RELATIONSHIPS
+--------------------------------------------------------------------------------
+When inspected via Xcode's View Debugger (`Debug View Hierarchy`), the hierarchical 
+ownership tree is structured as follows:
+
+A. Window & Container Hierarchy:
+   * `UIWindow` (Parent)
+       └── `UILayoutContainerView` (Managed by UINavigationController)
+             ├── `UINavigationTransitionView`
+             │     └── `CourseListViewController.view`
+             └── `UINavigationBar` (Displays Large Title "Course Catalog")
+
+B. List Screen View Hierarchy:
+   * `CourseListViewController.view` (UIView, Background: .systemGroupedBackground)
+       └── `UITableView` (Subchild)
+             └── `UITableViewWrapperView`
+                   └── `CourseTableViewCell`
+                         └── `UITableViewCellContentView`
+                               ├── `iconBackgroundView` (UIView, cornerRadius: 12)
+                               │     └── `iconImageView` (UIImageView)
+                               ├── `titleLabel` (UILabel)
+                               ├── `instructorLabel` (UILabel)
+                               ├── `levelBadge` (UILabel)
+                               └── `durationLabel` (UILabel)
+
+C. Detail Screen View Hierarchy:
+   * `CourseDetailViewController.view`
+       └── `UIScrollView` (Parent for scrollable area)
+             └── `UIStackView` (Container for card components)
+                   ├── `headerCard` (UIView) ➔ Stack (UIImageView, UILabels)
+                   ├── `metaCard` (UIView) ➔ Vertical rows of Key-Value items
+                   ├── `syllabusCard` (UIView) ➔ Numbered badge subviews
+                   └── `actionsCard` (UIView) ➔ Action buttons
+
+Key Parent-Child Rules Identified:
+1. Every view has exactly one `superview` (or nil if it is the root window).
+2. A view's coordinates and touch handling are localized within its direct superview's coordinate bounds.
+3. Subviews inherit alpha transparency and hit-testing properties from their parent view.
+
+--------------------------------------------------------------------------------
+3. PASSING DATA SAFELY WITHOUT GLOBAL VARIABLES (TASK 2)
+--------------------------------------------------------------------------------
+Global variables and singletons introduce hidden shared state, tight coupling, and data races.
+In this implementation:
+- The list view controller maintains its local model array: `private var courses: [Course]`.
+- Upon cell selection:
+    ```swift
+    let selectedCourse = courses[indexPath.row]
+    let detailVC = CourseDetailViewController(course: selectedCourse)
+    navigationController?.pushViewController(detailVC, animated: true)
+    ```
+- `CourseDetailViewController` receives the course instance immutably through its initializer:
+    ```swift
+    init(course: Course?) {
+        self.course = course
+        super.init(nibName: nil, bundle: nil)
+    }
+    ```
+- This follows the Dependency Injection (DI) pattern: the detail screen does not know or care how the list acquired the data.
+
+--------------------------------------------------------------------------------
+4. DEFENSIVE PROGRAMMING & AVOIDING FORCE-UNWRAPPING (TASK 5)
+--------------------------------------------------------------------------------
+Force-unwrapping (`!`) on IBOutlets or models causes immediate fatal runtime crashes (`EXC_BAD_INSTRUCTION`) if:
+- An outlet disconnects during refactoring.
+- A storyboard identifier changes.
+- A view controller is pushed before its dependencies are set.
+
+How this implementation guarantees crash immunity:
+1. `guard let cell = tableView.dequeueReusableCell(...) as? CourseTableViewCell else { return UITableViewCell() }`
+2. `guard indexPath.row < courses.count else { return }`
+3. In DetailViewController:
+    ```swift
+    guard let course = self.course else {
+        showMissingDataFallback()
+        return
+    }
+    ```
+   If data is nil, the view gracefully shows a user-friendly notice instead of crashing.
+4. Navigation controller push/pop calls use optional chaining: `navigationController?.pushViewController(...)` and `navigationController?.popViewController(animated: true)`.
+================================================================================
