@@ -1,0 +1,183 @@
+================================================================================
+WIPRO iOS DEVELOPER TRAINING - ASSESSMENT MILESTONE 3
+VIVA & FACULTY REVIEW GUIDE: NETWORKING AND UIKIT
+Student: Raghav Gupta
+Target Milestone: Assessment Milestone 3 (Networking & UIKit)
+================================================================================
+
+1. TOPIC 1: THE UIKIT VIEW HIERARCHY
+--------------------------------------------------------------------------------
+Q1.1: What is the UIKit view hierarchy and how is it structured?
+Answer:
+"The UIKit view hierarchy is an inverted tree structure representing every visual
+element on screen:
+- At the root of the hierarchy is the UIWindow (hosted inside a UIWindowScene).
+- The window holds a rootViewController (such as a UITabBarController or
+  UINavigationController).
+- Each UIViewController manages a root UIView (`self.view`).
+- Subviews are added hierarchically to this root view using `view.addSubview(...)`.
+Every view retains a strong reference to its subviews array (`subviews: [UIView]`),
+while each subview maintains a weak reference back to its parent (`superview: UIView?`)."
+
+Q1.2: How does the Responder Chain work in relation to the View Hierarchy?
+Answer:
+"When a user touches the screen, UIKit performs 'Hit-Testing' from the top of the
+window downwards using `hitTest(_:with:)` and `point(inside:with:)` to locate the
+deepest interactive subview beneath the touch (the First Responder).
+If that view cannot handle the event (e.g., no touch handler or target-action), the
+event travels UP the Responder Chain:
+subview -> superview -> ... -> UIViewController -> UIWindow -> UIApplication -> UIApplicationDelegate.
+If no responder handles it, the touch is discarded."
+
+Q1.3: How do you inspect and debug the view hierarchy in Xcode?
+Answer:
+"While running in the iOS Simulator or device:
+1. In Xcode's debug bar, click the 'Debug View Hierarchy' button (stacked squares icon).
+2. Xcode pauses execution and renders a 3D exploded interactive model of all views.
+3. We can rotate the 3D model to spot overlapping views, clipping issues, zero-frame
+   views, or misconfigured Auto Layout constraints.
+4. The Object Inspector on the right displays the exact frame, constraints, layer
+   properties, and memory address of the selected view."
+
+
+2. TOPIC 2: AUTO LAYOUT & CONSTRAINTS
+--------------------------------------------------------------------------------
+Q2.1: Why do we set `translatesAutoresizingMaskIntoConstraints = false`?
+Answer:
+"By default, views created programmatically in UIKit have this property set to `true`.
+This causes the system to automatically generate constraints based on the view's
+legacy autoresizing mask (fixed frame coordinates).
+When we define programmatic Auto Layout constraints using NSLayoutConstraint or anchors,
+the autoresizing constraints conflict with our custom constraints, resulting in
+'Unsatisfiable Constraints' warnings and layout breaks. Setting it to `false` tells UIKit:
+'Do not create automatic frame-based constraints; I will define the layout rules myself.'"
+
+Q2.2: What is the underlying mathematical equation of an Auto Layout constraint?
+Answer:
+"Every constraint represents a linear relationship solved by Apple's Cassowary layout engine:
+    Item1.Attribute1 = Multiplier * Item2.Attribute2 + Constant
+For example:
+    label.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16)
+translates to:
+    label.top = 1.0 * cardView.top + 16.0"
+
+Q2.3: Explain Intrinsic Content Size, Content Hugging, and Compression Resistance.
+Answer:
+"- Intrinsic Content Size: The natural size a view requires to display its content
+  without explicit width or height constraints (e.g., a UILabel's text size or a
+  UIButton's title + insets).
+- Content Hugging Priority (CHP): Resists being stretched LARGER than intrinsic size.
+  Think of it as a rubber band pulling inward. Default is 250 (low).
+- Content Compression Resistance Priority (CCRP): Resists being squeezed SMALLER
+  than intrinsic size. Default is 750 (high) to prevent text truncation.
+When two labels sit side-by-side in a horizontal row, the one with HIGHER Content
+Hugging stays snug around its text, while the one with LOWER Hugging stretches to fill
+the remaining space."
+
+Q2.4: What is the purpose of `safeAreaLayoutGuide`?
+Answer:
+"`safeAreaLayoutGuide` represents the portion of the screen that is not obscured by
+system hardware or chrome (the Dynamic Island, sensor notch, home indicator bar,
+status bar, or navigation bar).
+Pinning content to `safeAreaLayoutGuide.topAnchor` and `bottomAnchor` ensures that
+buttons and text remain fully visible and tappable across all iPhone screen sizes
+without getting cut off by hardware cutouts."
+
+
+3. TOPIC 3: URLSession & MODERN iOS NETWORKING
+--------------------------------------------------------------------------------
+Q3.1: What is the role of URLSession in iOS?
+Answer:
+"`URLSession` is Apple's high-performance framework for handling HTTP/HTTPS network
+data transfers. It manages:
+- Connection pooling and keep-alive HTTP connections.
+- TLS/SSL cryptographic handshakes and security.
+- Request queueing, caching protocols, and cookie storage.
+- Background transfers that continue even when the app is suspended."
+
+Q3.2: Why use async/await with URLSession instead of completion handler closures?
+Answer:
+"1. Eliminates Callback Hell: Code executes top-to-bottom linearly instead of deeply
+   nested closures.
+2. Eliminates Retain Cycles: No need for `[weak self]` in completion handlers.
+3. Thread Safety: Results return directly to the caller, and when invoked from
+   `@MainActor`, updates land safely on the Main Thread without manually calling
+   `DispatchQueue.main.async`.
+4. Native Error Propagation: We use standard `try/catch` instead of unwrapping optional
+   `(data, response, error)` tuples."
+
+Q3.3: How should an app handle non-success HTTP status codes (404, 500)?
+Answer:
+"URLSession does NOT throw an error for HTTP 404 or 500 because the network round-trip
+completed successfully. Therefore, we must:
+1. Cast `response as? HTTPURLResponse`.
+2. Check if `statusCode` falls in the success range `(200...299)`.
+3. If it is 404, throw a user-friendly error like 'Resource not found'.
+4. If it is 500..599, throw 'Server is temporarily unavailable'.
+5. Provide a clear retry button in the UI so the user is never stuck on a blank screen."
+
+Q3.4: How do you avoid exposing API keys in a client application?
+Answer:
+"1. Backend-for-Frontend (BFF) Proxy: The mobile app communicates with our own backend
+   server; our secure server makes the third-party call with the secret API key.
+2. Configuration Files outside Git: Store keys in `.xcconfig` files excluded via `.gitignore`.
+3. Secure Enclave / Keychain: For user tokens and credentials, store them in the iOS
+   Keychain, never in `UserDefaults` or hardcoded in source code."
+
+
+4. TOPIC 4: Codable & JSON PARSING
+--------------------------------------------------------------------------------
+Q4.1: Why use Codable instead of manually reading dictionary keys (`[String: Any]`)?
+Answer:
+"1. Compile-Time Type Safety: If the JSON field is an Int, Swift decodes it directly
+   into an `Int`. Manual dictionary casting (`dict[\"id\"] as? Int`) is prone to typos
+   and runtime type mismatches.
+2. Zero Boilerplate: Conform the struct to `Codable`, and the Swift compiler synthesizes
+   all `init(from: Decoder)` and `encode(to: Encoder)` logic automatically.
+3. Robust Error Reporting: If a field is missing or has the wrong type, `JSONDecoder`
+   throws explicit errors like `DecodingError.keyNotFound` or `DecodingError.typeMismatch`
+   with exact key paths for instant debugging."
+
+Q4.2: How do you handle JSON keys that don't match Swift naming conventions (e.g., snake_case)?
+Answer:
+"Two methods:
+Method A (Automated):
+    let decoder = JSONDecoder()
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
+Method B (Explicit CodingKeys enum):
+    struct User: Codable {
+        let userId: Int
+        let firstName: String
+        
+        enum CodingKeys: String, CodingKey {
+            case userId = \"user_id\"
+            case firstName = \"first_name\"
+        }
+    }"
+
+Q4.3: How would you test decoding without depending on a live API?
+Answer:
+"We write unit tests that supply static mock JSON data to `JSONDecoder`:
+    let mockJSON = \"\"\"
+    [{\"userId\": 1, \"id\": 101, \"title\": \"Test Title\", \"body\": \"Test Body\"}]
+    \"\"\".data(using: .utf8)!
+    
+    let posts = try JSONDecoder().decode([Post].self, from: mockJSON)
+    XCTAssertEqual(posts.count, 1)
+    XCTAssertEqual(posts[0].id, 101)
+This tests 100% of the decoding logic offline, deterministically, and in milliseconds."
+
+
+5. SUMMARY CHECKLIST OF MILESTONE 3 DELIVERABLES
+--------------------------------------------------------------------------------
+Requirement 1: Profile Form with Auto Layout, dynamic stack, scrollview keyboard
+               inset handling, inline validation, and shake animation.
+Requirement 2: Public test API (JSONPlaceholder /posts), Codable Post model,
+               URLSession async/await service.
+Requirement 3: Dedicated UI states for Loading (spinner), Success (table),
+               Empty state (tray icon), and Failure (HTTP 404/500/offline retry card).
+Requirement 4: Navigation controller push from PostListViewController to
+               PostDetailViewController with model injection (no globals).
+Requirement 5: Complete Viva & Faculty guide covering View Hierarchy, Auto Layout,
+               URLSession, and Codable.
+================================================================================

@@ -4,6 +4,13 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>assessment-m3.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>40</integer>
+		</dict>
 		<key>m2-task-1.xcscheme_^#shared#^</key>
 		<dict>
 			<key>isShown</key>
