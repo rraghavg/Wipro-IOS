@@ -1,0 +1,127 @@
+================================================================================
+WIPRO iOS DEVELOPER TRAINING - ASSESSMENT MILESTONE 2
+TASK 5 VIVA & INTERVIEW GUIDE: CONCURRENCY COMPARISON IN SWIFT
+Student: Raghav Gupta
+================================================================================
+
+1. ARCHITECTURAL COMPARISON MATRIX
+--------------------------------------------------------------------------------
+Feature               | Grand Central Dispatch (GCD)     | async / await               | Task & Task Groups
+----------------------|----------------------------------|-----------------------------|-----------------------------
+Introduction          | iOS 4 (2010)                     | Swift 5.5 / iOS 15 (2021)   | Swift 5.5 / iOS 15 (2021)
+Paradigm              | Closure-based Queue API          | Language Coroutines         | Structured Concurrency Tree
+Execution Unit        | DispatchWorkItem / Block         | Suspension Point (`await`)  | Task / Child Task
+Thread Pool           | Dynamic Thread Pool              | Cooperative Thread Pool     | Cooperative Thread Pool
+                      | (Risk of Thread Explosion)       | (Limited to CPU core count) | (Limited to CPU core count)
+Code Structure        | Nested closures / Callbacks      | Linear, top-to-bottom       | Scoped group closures
+Error Handling        | Result<T, Error> or Error?       | try / throws / catch        | try / throws / catch
+Cancellation          | Manual flags / WorkItem.cancel() | Cooperative Cancellation    | Tree cancellation propagation
+UI Thread Transition  | DispatchQueue.main.async         | @MainActor / MainActor.run  | Inherits @MainActor if in UI
+Memory Leaks          | High ([weak self] required)      | Low (natural scope cleanup) | Zero child task leaks
+
+
+2. CORE CONCEPTS EXPLAINED FOR VIVA
+--------------------------------------------------------------------------------
+
+A. Grand Central Dispatch (GCD)
+- What it is: A low-level C-based API (libdispatch) that abstracts thread management
+  using dispatch queues (`DispatchQueue.main`, `DispatchQueue.global()`).
+- Limitations:
+  1. Callback Hell (Pyramid of Doom): Chaining multiple requests leads to deeply
+     nested completion handlers.
+  2. Thread Explosion: If 100 tasks are dispatched to a concurrent queue and block on I/O,
+     GCD spawns 100 POSIX threads. Context switching between 100 threads exhausts CPU
+     caches and memory.
+  3. Retain Cycles: Developers must constantly remember `[weak self]` in closures.
+
+B. async / await
+- What it is: Swift's coroutine keywords. Instead of blocking an OS thread, the keyword
+  `await` designates a "suspension point."
+- How it works: When a function reaches `await`, it gives up control of the thread. The
+  underlying CPU thread is free to execute other useful work. When the async operation
+  finishes, Swift resumes the function on an available thread.
+- Benefit: Code reads linearly, exactly like synchronous code, with full `try/catch`
+  error handling.
+
+C. Task
+- What it is: An asynchronous execution context. It serves as the bridge between
+  synchronous code (like a button tap or `viewDidLoad`) and asynchronous code.
+- Characteristics:
+  - `Task { ... }`: Inherits caller context, priority, and actor isolation (e.g., if
+    created inside a UIViewController, it runs on `@MainActor`).
+  - `Task.detached { ... }`: Does NOT inherit context or actor isolation; runs on a
+    background thread pool.
+  - Supports cooperative cancellation via `task.cancel()`, checked with
+    `Task.isCancelled` or `try Task.checkCancellation()`.
+
+D. Task Groups (`withTaskGroup` / `withThrowingTaskGroup`)
+- What it is: Structured concurrency for dynamic sets of tasks.
+- When to use: When the number of concurrent jobs is not known at compile time
+  (e.g., downloading an array of 20 images in parallel).
+- Structured Hierarchy: Child tasks added to the group are bound to the group's lifetime.
+  If the group throws an error or is cancelled, all pending child tasks are automatically
+  cancelled. No child task can outlive its parent.
+
+
+3. TOP 8 FACULTY VIVA QUESTIONS & MODEL ANSWERS
+--------------------------------------------------------------------------------
+
+Q1: What is "Thread Explosion" in GCD, and how does Swift Concurrency prevent it?
+Answer:
+"In GCD, if multiple concurrent tasks block on I/O or network requests, GCD's thread
+pool continues spawning new threads to keep CPU queues occupied, sometimes creating
+dozens or hundreds of threads. This causes heavy context switching and memory overhead.
+Swift Concurrency uses a Cooperative Thread Pool limited to the number of physical CPU
+cores (e.g., 6 or 8 threads). When an async function suspends at `await`, it yields the
+thread rather than blocking it, preventing thread explosion entirely."
+
+Q2: What is the difference between `async let` and `Task Groups`?
+Answer:
+"We use `async let` when we have a fixed, known number of independent operations to run
+concurrently (e.g., fetching User Profile and fetching Announcements). We use `Task Groups`
+(`withThrowingTaskGroup`) when the number of concurrent tasks is dynamic at runtime
+(e.g., iterating over an array of image URLs)."
+
+Q3: What does "Cooperative Cancellation" mean?
+Answer:
+"In Swift, calling `task.cancel()` does NOT forcefully terminate the thread or kill the
+process. Instead, it sets a cancellation flag on the task. The running code must
+cooperatively check this flag using `Task.isCancelled` or `try Task.checkCancellation()`
+at appropriate intervals and exit gracefully, cleaning up resources."
+
+Q4: What is the difference between `Task { }` and `Task.detached { }`?
+Answer:
+"`Task { }` inherits the surrounding environment, including priority, task-local storage,
+and Actor isolation (such as `@MainActor`). `Task.detached { }` breaks away completely
+and runs independently without inheriting actor isolation or priority, which is useful
+only for isolated background computations that must never touch the main thread."
+
+Q5: Why is Structured Concurrency safer than Unstructured Concurrency?
+Answer:
+"In structured concurrency (`async let` and `TaskGroup`), tasks have a clear parent-child
+relationship with a well-defined lexical scope. A parent task cannot finish until all its
+child tasks complete. If a child task fails with an error, the parent task cancels all
+sibling child tasks automatically, preventing orphaned tasks and background resource leaks."
+
+Q6: What is an Actor in Swift and how does it prevent race conditions?
+Answer:
+"An Actor is a reference type (like a class) that provides synchronization and mutable state
+protection through 'Actor Isolation'. Only one task can execute code inside an actor at
+any given time. External access to actor properties or methods requires `await`, ensuring
+that data races are caught at compile time."
+
+Q7: What is `@MainActor`?
+Answer:
+"`@MainActor` is a global actor that coordinates execution on the application's Main Thread.
+By annotating a class (like `UIViewController` or `ViewModel`) with `@MainActor`, the Swift
+compiler guarantees that all its methods and properties are accessed exclusively on the
+main thread, ensuring UIKit thread safety."
+
+Q8: How did you refactor MVC to MVVM in Milestone 2?
+Answer:
+"In MVC, the ViewController handled validation, filtering, state management, and view updates,
+causing a 'Massive View Controller'. In MVVM, we extracted the business logic, input validation,
+filtering, and sorting into a pure `TaskListViewModel` without any UIKit dependency. This
+allowed us to write isolated, deterministic unit tests for 100% of the ViewModel logic
+without needing to instantiate a simulator or UI."
+================================================================================

@@ -1,0 +1,108 @@
+================================================================================
+WIPRO iOS DEVELOPER TRAINING - ASSESSMENT MILESTONE 2
+TASK 4 TECHNICAL REPORT: WHY UI UPDATES BELONG ON THE MAIN THREAD / MAIN ACTOR
+Student: Raghav Gupta
+================================================================================
+
+1. EXECUTIVE SUMMARY
+--------------------------------------------------------------------------------
+In iOS application development, all user interface interactions and view modifications
+(such as altering labels, frames, constraints, table view data, or layer properties)
+must occur strictly on the Main Thread (Main Queue / @MainActor).
+
+Violating this rule causes unpredictable UI glitches, missing renders, race conditions,
+data inconsistency, and application crashes (such as EXC_BAD_ACCESS or SIGSEGV).
+
+
+2. WHY IS UIKit NOT THREAD-SAFE?
+--------------------------------------------------------------------------------
+A common question asked by faculty is: "Why didn't Apple just make UIKit thread-safe
+by adding mutex locks around all UI methods?"
+
+There are three primary architectural reasons:
+a) Performance Overhead & Frame Drops:
+   iOS devices render screens at 60 Hz (every 16.6 milliseconds) or 120 Hz ProMotion
+   (every 8.3 milliseconds). Adding synchronization locks, mutexes, or atomic barriers
+   around every property of every UIView, CALayer, and UIViewController would introduce
+   massive locking and context-switching overhead, severely degrading scroll performance
+   and causing stuttering.
+
+b) Priority Inversion & Deadlocks:
+   If background worker threads held locks on UI components while the main thread
+   attempted to render a frame or respond to a touch event, the main thread would block
+   waiting for the background lock. This leads to Priority Inversion and frequent deadlocks.
+
+c) Single-Threaded by Design:
+   By intentionally keeping UIKit single-threaded, Apple guarantees lightning-fast view
+   hierarchy traversals, predictable layout passes, and zero locking overhead.
+
+
+3. THE RUNLOOP, DISPLAY LINK, AND COMPOSITING PIPELINE
+--------------------------------------------------------------------------------
+How iOS coordinates screen rendering:
+1. Event Processing: User interactions (touches, gestures, hardware events) arrive at
+   the application port and are processed by CFRunLoop on the Main Thread.
+2. Layout Pass (setNeedsLayout / layoutSubviews): View frames and constraints are
+   calculated on the main thread.
+3. Display Pass (drawRect / setNeedsDisplay): Content is backed by bitmap buffers.
+4. Core Animation Commit: At the end of each run loop iteration, Core Animation serializes
+   the view/layer tree and sends it over IPC to the system render server (WindowServer).
+5. GPU Rendering: The WindowServer renders the textures to the physical screen synchronized
+   with VSYNC.
+
+If a background thread modifies a view's frame or subviews during an active run loop cycle,
+it mutates internal C++ data structures while Core Animation is reading them, corrupting
+the memory and crashing the app.
+
+
+4. THE EVOLUTION: GCD vs MODERN SWIFT CONCURRENCY (@MainActor)
+--------------------------------------------------------------------------------
+A. Legacy GCD Pattern (Grand Central Dispatch):
+   In earlier versions of Swift and Objective-C, developers had to manually ensure
+   execution returned to the main thread:
+
+   DispatchQueue.global(qos: .userInitiated).async {
+       let data = fetchFromNetwork()
+       // Developer must remember this line:
+       DispatchQueue.main.async {
+           self.titleLabel.text = data.title
+       }
+   }
+
+   Weakness:
+   - The compiler cannot verify thread safety.
+   - If a developer accidentally forgets `DispatchQueue.main.async`, the bug slips into
+     production until detected by Xcode's Main Thread Checker at runtime.
+
+B. Modern Swift Concurrency Pattern (@MainActor):
+   Swift 5.5 introduced `@MainActor`, a global actor that represents the main thread:
+
+   @MainActor
+   class TaskListViewController: UIViewController {
+       func updateUI(with data: TaskData) {
+           self.titleLabel.text = data.title
+       }
+   }
+
+   Advantages:
+   - Compile-Time Enforcement: The Swift compiler statically checks actor isolation.
+     Attempting to call `updateUI()` from a background async context without `await`
+     or `await MainActor.run { ... }` results in a compile error.
+   - Elimination of Boilerplate: No need for manual closure nesting or `[weak self]`
+     dispatches for simple UI transitions.
+
+
+5. DEVELOPER TOOLS FOR THREAD SAFETY VERIFICATION
+--------------------------------------------------------------------------------
+1. Xcode Main Thread Checker (MTC):
+   A built-in diagnostic tool enabled by default in Xcode Scheme Settings (Diagnostics tab).
+   It intercepts UIKit and AppKit API calls dynamically at runtime and generates an Xcode
+   runtime warning if any UI method is invoked off the main thread.
+
+2. Thread Sanitizer (TSan):
+   Detects data races between competing threads modifying shared memory without
+   synchronization.
+
+3. Swift 6 Strict Concurrency Checking (`-strict-concurrency=complete`):
+   Guarantees data race safety at compile time using Sendable protocols and Actor isolation.
+================================================================================

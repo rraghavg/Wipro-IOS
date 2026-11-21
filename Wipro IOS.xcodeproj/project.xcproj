@@ -229,6 +229,37 @@
           ],
         },
       ],
+    },     {
+      "kind": "folder",
+      "path": "assessment-m2",
+      "membership-exceptions": [
+        {
+          "target": "m2-task-1",
+          "inclusions": [
+            "task-1/main.swift",
+          ],
+        }, {
+          "target": "m2-task-2",
+          "inclusions": [
+            "task-2/main.swift",
+          ],
+        }, {
+          "target": "m2-task-3",
+          "inclusions": [
+            "task-3/main.swift",
+          ],
+        }, {
+          "target": "m2-task-4",
+          "inclusions": [
+            "task-4/main.swift",
+          ],
+        }, {
+          "target": "m2-task-5",
+          "inclusions": [
+            "task-5/main.swift",
+          ],
+        },
+      ],
     }, {
       "kind": "group",
       "name": "Products",
@@ -259,6 +290,11 @@
         { "path": "<PRODUCTS>/lab-7a.app", "id": "EC00001530B000000000000F", "type": "wrapper.application", "index": false },
         { "path": "<PRODUCTS>/lab-7b.app", "id": "EC00001730B0000000000010", "type": "wrapper.application", "index": false },
         { "path": "<PRODUCTS>/lab-7c.app", "id": "EC00001930B0000000000011", "type": "wrapper.application", "index": false },
+        { "path": "<PRODUCTS>/m2-task-1", "id": "EC00002130B0000000000001", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/m2-task-2", "id": "EC00002230B0000000000002", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/m2-task-3", "id": "EC00002330B0000000000003", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/m2-task-4", "id": "EC00002430B0000000000004", "type": "compiled.mach-o.executable", "index": false },
+        { "path": "<PRODUCTS>/m2-task-5", "id": "EC00002530B0000000000005", "type": "compiled.mach-o.executable", "index": false },
       ],
     },
   ],
@@ -1053,6 +1089,122 @@
         "VALIDATE_PRODUCT[config=Release]": "YES",
       },
     },
+    {
+      "name": "m2-task-1",
+      "id": "EC00002A30B0000000000001",
+      "product": "Products/m2-task-1",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    },     {
+      "name": "m2-task-2",
+      "id": "EC00002A30B0000000000002",
+      "product": "Products/m2-task-2",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    },     {
+      "name": "m2-task-3",
+      "id": "EC00002A30B0000000000003",
+      "product": "Products/m2-task-3",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    },     {
+      "name": "m2-task-4",
+      "id": "EC00002A30B0000000000004",
+      "product": "Products/m2-task-4",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    },     {
+      "name": "m2-task-5",
+      "id": "EC00002A30B0000000000005",
+      "product": "Products/m2-task-5",
+      "product-type": "tool",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        {
+          "kind": "copy",
+          "name": "Copy Files",
+          "relative-path": "/usr/share/man/man1/",
+          "scope": "install",
+        },
+      ],
+      "build-settings": {
+        "CODE_SIGN_STYLE": "Automatic",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SDKROOT": "macosx",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+      },
+    }, 
   ],
   "build-settings": {
     "ALWAYS_SEARCH_USER_PATHS": "NO",

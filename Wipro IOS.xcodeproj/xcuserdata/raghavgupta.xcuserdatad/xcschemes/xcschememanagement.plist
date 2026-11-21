@@ -4,6 +4,41 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>m2-task-1.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>35</integer>
+		</dict>
+		<key>m2-task-2.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>36</integer>
+		</dict>
+		<key>m2-task-3.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>37</integer>
+		</dict>
+		<key>m2-task-4.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>38</integer>
+		</dict>
+		<key>m2-task-5.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>39</integer>
+		</dict>
 		<key>ENUM.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
