@@ -4,6 +4,34 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>lab-8a.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>45</integer>
+		</dict>
+		<key>lab-8b.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>46</integer>
+		</dict>
+		<key>lab-8c.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>47</integer>
+		</dict>
+		<key>lab-8d.xcscheme_^#shared#^</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>48</integer>
+		</dict>
 		<key>assessment-m3.xcscheme_^#shared#^</key>
 		<dict>
 			<key>isShown</key>
