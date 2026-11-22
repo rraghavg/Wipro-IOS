@@ -1,0 +1,80 @@
+================================================================================
+WIPRO iOS DEVELOPER TRAINING - LAB 8D
+FORM VALIDATION & RESPONSIVENESS TEST CASES
+Student: Raghav Gupta
+================================================================================
+
+TEST SUITE OVERVIEW
+--------------------------------------------------------------------------------
+This document validates declarative SwiftUI form behavior, input validation,
+disabled submit states, and layout responsiveness across device form factors.
+
+TEST CASE 1: Initial Empty Form State (Disabled Button)
+- Pre-conditions: App launched, all inputs at initial blank defaults.
+- Inputs: None.
+- Expected Behavior:
+  - Submit button is disabled (`.disabled(!formData.isFormComplete)`).
+  - Button opacity is reduced to 0.5.
+  - Form footer displays notice: "Complete all required fields and accept terms to enable submission."
+- Result: PASS
+
+TEST CASE 2: Partial Input Validation
+- Inputs:
+  - Name: "R" (1 character - invalid)
+  - Email: "raghav@" (missing domain - invalid)
+  - Organization: "Wipro" (valid)
+  - Agreed to Code of Conduct: false
+- Expected Behavior:
+  - Submit button remains disabled.
+  - Inline error appears under Name: "Name must be at least 2 characters."
+  - Inline error appears under Email: "Please enter a valid email address."
+  - Inline error appears under Terms: "You must accept the code of conduct to proceed."
+- Result: PASS
+
+TEST CASE 3: Boundary Valid Inputs (Button Enabled)
+- Inputs:
+  - Name: "Raghav Gupta"
+  - Email: "raghav.gupta@wipro.com"
+  - Organization: "Wipro Technologies"
+  - Track: "SwiftUI & Declarative Layouts"
+  - Agreed to Code of Conduct: true
+- Expected Behavior:
+  - `formData.isFormComplete` evaluates to `true`.
+  - Submit button transitions to enabled state (full opacity, tappable).
+  - Footer warning disappears.
+- Result: PASS
+
+TEST CASE 4: Extension Review Sheet Inspection
+- Actions: With valid inputs, tap "Review & Submit".
+- Expected Behavior:
+  - Modal sheet `ReviewRegistrationSheet` slides up smoothly.
+  - Displays summarized attendee info, track, and certificate request.
+  - "Edit" dismisses the sheet back to the form with all fields preserved.
+  - "Confirm & Complete Registration" triggers success alert.
+- Result: PASS
+
+TEST CASE 5: Success Confirmation & Auto-Reset
+- Actions: Tap "Confirm & Complete Registration" in review sheet.
+- Expected Behavior:
+  - Alert titled "Registration Confirmed! 🎉" appears.
+  - Displays personalized message: "Thank you, Raghav Gupta! You are registered for 'SwiftUI & Declarative Layouts'..."
+  - Tapping "Done" automatically resets all fields to clean initial state.
+- Result: PASS
+
+TEST CASE 6: Extreme Long Text & TextEditor Handling (R5)
+- Inputs:
+  - Special Notes: Multi-paragraph string (500+ characters) entered into TextEditor.
+- Expected Behavior:
+  - TextEditor dynamically scrolls within its Section.
+  - Form layout does not clip, wrap incorrectly, or overflow the viewport.
+  - Review sheet displays full notes without truncating.
+- Result: PASS
+
+TEST CASE 7: Small-Screen Layout (iPhone SE / Portrait Mode) (R5)
+- Environment: iPhone SE (3rd generation) simulator (4.7-inch screen).
+- Expected Behavior:
+  - Form scrolls naturally using native keyboard avoidance.
+  - Picker navigation links and menus fit within the compact horizontal width.
+  - All interactive tap targets maintain minimum 44pt height.
+- Result: PASS
+================================================================================
